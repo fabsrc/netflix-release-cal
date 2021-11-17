@@ -1,6 +1,14 @@
 import ical, { ICalCalendar } from 'ical-generator'
 import { Country } from './country'
-import { getReleases } from './release'
+import { getReleases, Release } from './release'
+
+const getTitle = (release: Release): string => {
+  if (release.title1 !== release.title2) {
+    return `${release.title1} - ${release.title2}`
+  }
+
+  return release.title1
+}
 
 export const createCalendar = async (
   country: Country,
@@ -15,7 +23,7 @@ export const createCalendar = async (
   releases.forEach((release) => {
     calendar.createEvent({
       start: new Date(release.startTime),
-      summary: `${release.title1} - ${release.title2}`,
+      summary: getTitle(release),
       location: country,
       url: `https://netflix.com/title/${release.videoID}`,
       created: new Date(metadata.updatedAt),
