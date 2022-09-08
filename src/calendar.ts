@@ -22,11 +22,13 @@ export const createCalendar = async (
 
   releases.forEach((release) => {
     calendar.createEvent({
+      id: `${release.videoID}-${release.startTime}`,
       start: new Date(release.startTime),
       summary: getTitle(release),
       location: country,
       url: `https://netflix.com/title/${release.videoID}`,
       created: new Date(metadata.updatedAt),
+      stamp: new Date(metadata.updatedAt),
     })
   })
 
